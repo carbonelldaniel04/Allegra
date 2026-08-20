@@ -1,0 +1,6 @@
+{
+  "name": "Allegra Salon",
+  "description": "Landing Page de alta gama para Allegra Salon & Academy por Master Leticia Moctezuma. Micropigmentación, pestañas y visagismo con CRM integrado, reservas online y asistente virtual.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

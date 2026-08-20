@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Montserrat', sans-serif;
+    --font-button: 'Poppins', sans-serif;
+    --font-quote: 'Cormorant Garamond', serif;
+  }
+}
+
+.font-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.font-button {
+  font-family: 'Poppins', sans-serif;
+}
+
+.font-quote {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Luxury gold shimmer & shadows */
+.gold-gradient {
+  background: linear-gradient(135deg, #C8A96B 0%, #DFCA9B 50%, #B2904F 100%);
+}
+
+.gold-text {
+  background: linear-gradient(135deg, #C8A96B 0%, #DFCA9B 50%, #9B7836 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rose-gradient {
+  background: linear-gradient(135deg, #F8F5F2 0%, #E8DDD4 50%, #D8B4B0/30 100%);
+}
+
+.luxury-shadow {
+  box-shadow: 0 10px 30px -10px rgba(44, 44, 44, 0.08), 0 4px 6px -2px rgba(44, 44, 44, 0.03);
+}
+
+.luxury-shadow-lg {
+  box-shadow: 0 20px 40px -15px rgba(200, 169, 107, 0.15), 0 8px 16px -4px rgba(44, 44, 44, 0.06);
+}
+
+.luxury-shadow-gold {
+  box-shadow: 0 10px 25px -5px rgba(200, 169, 107, 0.35);
+}
+
+/* Smooth custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F8F5F2;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8B4B0;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C8A96B;
+}
