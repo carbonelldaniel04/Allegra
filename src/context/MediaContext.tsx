@@ -106,24 +106,34 @@ export const MediaProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [initialManagerTab, setInitialManagerTab] = useState<'hero' | 'servicios' | 'galeria' | 'equipo' | 'testimonios'>('hero');
 
   // Persistence triggers
+  const persistMedia = (key: string, value: unknown) => {
+    try {
+      localStorage.setItem(`${STORAGE_KEY}_${key}`, JSON.stringify(value));
+    } catch (error) {
+      // Uploaded images can exceed localStorage's quota. Keep the UI usable and
+      // avoid breaking the rest of the media manager when that happens.
+      console.warn(`[Allegra] No se pudo guardar ${key} en el navegador.`, error);
+    }
+  };
+
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY + '_hero', JSON.stringify(heroSlides));
+    persistMedia('hero', heroSlides);
   }, [heroSlides]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY + '_services', JSON.stringify(services));
+    persistMedia('services', services);
   }, [services]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY + '_gallery', JSON.stringify(gallery));
+    persistMedia('gallery', gallery);
   }, [gallery]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY + '_specialists', JSON.stringify(specialists));
+    persistMedia('specialists', specialists);
   }, [specialists]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY + '_reviews', JSON.stringify(reviews));
+    persistMedia('reviews', reviews);
   }, [reviews]);
 
   // Handler functions
