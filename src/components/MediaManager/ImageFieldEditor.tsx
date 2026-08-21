@@ -23,24 +23,39 @@ export const ImageFieldEditor: React.FC<ImageFieldEditorProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>(categoryFilter || 'todos');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Handle local file upload & base64 conversion
+  // Convert uploads to a small data URL so images remain available after a reload.
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Check size limit (e.g. 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      alert('La imagen es muy pesada. Por favor selecciona una imagen menor a 5MB para optimizar el rendimiento.');
+    if (!file.type.startsWith('image/')) {
+      alert('Selecciona un archivo de imagen válido.');
       return;
     }
 
     const reader = new FileReader();
     reader.onload = (event) => {
-      if (typeof event.target?.result === 'string') {
-        onChangeUrl(event.target.result);
-      }
+      if (typeof event.target?.result !== 'string') return;
+
+      const source = new Image();
+      source.onload = () => {
+        const maxSize = 1800;
+        const scale = Math.min(1, maxSize / Math.max(source.naturalWidth, source.naturalHeight));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(source.naturalWidth * scale));
+        canvas.height = Math.max(1, Math.round(source.naturalHeight * scale));
+        const context = canvas.getContext('2d');
+        if (!context) return onChangeUrl(event.target!.result as string);
+
+        context.drawImage(source, 0, 0, canvas.width, canvas.height);
+        onChangeUrl(canvas.toDataURL('image/jpeg', 0.82));
+      };
+      source.onerror = () => onChangeUrl(event.target!.result as string);
+      source.crossOrigin = 'anonymous';
+      source.src = event.target.result;
     };
     reader.readAsDataURL(file);
+    e.target.value = '';
   };
 
   const handleApplyUrl = (e: React.FormEvent) => {
